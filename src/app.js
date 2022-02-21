@@ -1,6 +1,8 @@
 const express = require('express')
 
- class App {
+require('./database')
+
+class App {
      constructor(){
          this.server = express()
 
