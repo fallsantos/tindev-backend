@@ -12,6 +12,7 @@ class DevController {
         if(userExists){
             return res.json({
                 status: false,
+                message: 'User already registered',
                 data: userExists
             })  
         }
@@ -29,6 +30,7 @@ class DevController {
 
         return res.json({
             status: true,
+            message: 'User registered successfully',
             data: newDev
         })
     }
