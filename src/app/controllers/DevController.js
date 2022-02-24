@@ -48,7 +48,7 @@ class DevController {
             ]
         })
 
-        return res.status(400).json({
+        return res.json({
             status: true,
             message: '',
             data: users
