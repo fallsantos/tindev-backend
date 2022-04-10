@@ -2,8 +2,8 @@ const Dev = require('../models/Dev')
 
 class LikeController {
     async like(req, res) {
-        const { id } = req.params
         const { user } = req.headers
+        const { id } = req.params
 
         const loggedDev = await Dev.findById({ _id: user })
         const targetDev = await Dev.findById({ _id: id })
@@ -21,11 +21,22 @@ class LikeController {
         await loggedDev.save()
 
         if(targetDev.likes.includes(loggedDev._id)){
-            return res.json({
+            const loggedSocket = req.connectedUsers[user]
+            const targetSocket = req.connectedUsers[id]
+
+            // Avisa se estiver conectado(ao cliente io conectado)
+            if(loggedSocket){
+                req.io.to(loggedSocket).emit('match', targetDev)    
+            }
+
+            if(targetSocket){
+                req.io.to(targetSocket).emit('match', loggedDev)    
+            }
+            /*return res.json({
                 status: true,
                 message: 'Match!',
                 data: null
-            })
+            })*/
         }
 
         return res.json({

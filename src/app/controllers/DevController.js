@@ -5,6 +5,10 @@ const { use } = require('../routes/user.routes')
 
 class DevController {
     async store(req, res) {
+
+        console.log(req.body)
+        return
+
         const { username: user } = req.body
 
         let userExists = await Dev.findOne({user})
