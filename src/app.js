@@ -50,7 +50,7 @@ class App {
   
       this.server.use(express.json())
   
-      this.server.use(morgan('dev'))
+      //this.server.use(morgan('dev'))
   
       // CORS
       this.server.use((req, res, next) => {
@@ -58,25 +58,15 @@ class App {
         res.header('Access-Control-Allow-Methods', 'GET, POST')
         res.header('Access-Control-Allow-Headers', 'X-PINGOTHER, Content-Type, Authorization')
   
-        next()
+        return next()
       })
   
       this.server.use(cors())
-  
-      // Rota para os arquivos estáticos(imagens) dos posts.
-      this.server.use('/files', express.static(path.resolve(__dirname, '..', '..', 'uploads', 'resized')))
-     }
-    
+    }
 
-     middlewares(){
-        this.server.use(cors())
-        this.server.set('port', process.env.PORT)
-        this.server.use(express.json())
-     }
-
-     routes(){
-        this.server.use(routes)
-     }
+    routes(){
+      this.server.use(routes)
+    }
  }
 
 module.exports = new App().server
